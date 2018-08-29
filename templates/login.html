@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+	Login
+{% endblock titulo %}
+
+{% block contenido %}
+	<h2>{{msj}}</h2>
+	<form action="" method="POST">
+	{% csrf_token %}
+	{{formulario.as_p}}
+	<input type="submit" name="login" value="login">
+	</form>
+	<a href="{% url 'register' %}">Registrate</a>
+{% endblock contenido %}

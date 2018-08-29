@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+	Lista productos
+{% endblock titulo %}
+
+{% block contenido %}
+	<h2>Lista de productos</h2>
+	{{lista}}   <!--ste es el queryset -->
+	{% if request.user.is_authenticated and request.user.is_superuser %}
+		<a href="{% url 'agregar_producto' %}">Agregar producto</a>
+	{%endif%}
+	{% for x in lista %}
+		<p>
+			{{ forloop.counter }}
+			{{x.id}}
+			{{x.nombre}}
+			{{x.precio}}
+			{% if x.foto %} <!--si existe lo muestra-->
+			<img src="/media/{{x.foto}}" width="60px">
+			{% endif %}
+			<a href="{% url 'ver_producto' id_prod=x.id %}">Ver producto</a>
+		</p>
+			<a href="{% url 'editar_producto' id_prod=x.id %}">Editar productos</a>
+
+			<a href="{% url 'eliminar_producto' id_prod=x.id %}">Eliminar producto</a>
+			<a href="{% url 'desactivar_producto' id_prod=x.id %}">Desactivar producto</a>
+	{% endfor %}
+{% endblock contenido %}
