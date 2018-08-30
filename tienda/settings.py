@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'home',
     'webservices',
     'rest_framework',
+    'gunicorn',
+    'psycopg2',
 ]
 
 MIDDLEWARE = [
@@ -78,14 +80,16 @@ WSGI_APPLICATION = 'tienda.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tienda_cluster',
-        'USER': 'root', 
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #dejo sqlite para heroku
+        #'ENGINE': 'django.db.backends.mysql',
+        #'NAME': 'tienda_cluster',
+        #'USER': 'root', 
+        #'PASSWORD': '',
+        #'HOST': '127.0.0.1',
+        #'PORT': '3306',
+
     }
 }
 
@@ -127,9 +131,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+""" #conmente para heroku
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,"static")
 ]
+"""
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL="/media/"
 MEDIA_ROOT="media"
@@ -142,3 +151,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+ALLOWED_HOSTS = ['tienda-cluster.herokuapp.com']
